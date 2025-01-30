@@ -27,9 +27,9 @@ trait Simulation[R: ClassTag] extends App:
     case i: java.lang.Double => f"${i.doubleValue()}%1.2f"
     case x => x.toString
 
-  val nodes = 100
+  val nodes = 10
   val neighbourRange = 200
-  val (width, height) = (1920, 1080)
+  val (width, height) = (800, 600)
 
   ViewSetting.windowConfiguration = WindowConfiguration(width, height)
   ViewSetting.labelFontSize = 20
@@ -81,12 +81,13 @@ class Main7 extends AggregateProgramSkeleton:
 object Demo7 extends Simulation[Main7]
 
 class Main8 extends AggregateProgramSkeleton:
-  override def main() = minHoodPlus(nbrRange)
+  override def main() = minHoodPlus((nbrRange, (nbr{mid}, mid())))
 
 object Demo8 extends Simulation[Main8]
 
 class Main9 extends AggregateProgramSkeleton:
-  override def main() = rep(0){_+1}
+  override def main() = branch[Int](sense1){rep(0){a => branch(a<1000)(a+1)(a)}}{0}
+  //rep(0){_+1}
 
 object Demo9 extends Simulation[Main9]
 
@@ -113,9 +114,8 @@ class Main13 extends AggregateProgramSkeleton:
 object Demo13 extends Simulation[Main13]
 
 class Main14 extends AggregateProgramSkeleton:
-  import Builtins.Bounded.of_i
 
-  override def main() = rep(0){ x => boolToInt(sense1) max maxHoodPlus( nbr{x}) }
+  override def main() = rep(0){ _ max maxHoodPlus(nbr{mid})}
 
 object Demo14 extends Simulation[Main14]
 
